@@ -4,16 +4,10 @@
 </div>
 
 <div class="flex flex-col gap-2 mt-10">
-    <div class="border border-gray-300 text-black px-4 py-6 rounded-md flex flex-row collection-item">
-        <h2 class="text-lg flex-auto">Collection 1</h2>
-        <div class="text-gray-600">(5)</div>
+    <?php foreach ($data['collections'] as $collection) : ?>
+    <div class="border border-gray-300 text-black px-4 py-6 rounded-md flex flex-row collection-item" data-id="<?= $collection['id'] ?>">
+        <h2 class="text-lg flex-auto"><?= $collection['title'] ?></h2>
+        <div class="text-gray-600"><?= $collection['count'] ?></div>
     </div>
-    <div class="border border-gray-300 text-black px-4 py-6 rounded-md flex flex-row mt-4 collection-item">
-        <h2 class="text-lg flex-auto">Collection 2</h2>
-        <div class="text-gray-600">(3)</div>
-    </div>
-    <div class="border border-gray-300 text-black px-4 py-6 rounded-md flex flex-row mt-4 collection-item">
-        <h2 class="text-lg flex-auto">Collection 3</h2>
-        <div class="text-gray-600">(8)</div>
-    </div>
+    <?php endforeach; ?>
 </div> 

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     collectionItems.forEach(item => {
         item.addEventListener('click', () => {
-            window.location.href = '/collection/1';
+            window.location.href = '/collection/' + item.dataset.id;
         });
     });
 

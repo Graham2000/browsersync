@@ -1,6 +1,6 @@
 <div class="flex flex-row gap-2">
     <div class="flex flex-row w-full justify-between items-center">
-        <a href="/collection/1" id="backButton" class="bg-gray-200 text-black px-4 py-2 rounded-md flex flex-row">
+        <a href="/collection/<?= $data['collectionId'] ?>" id="backButton" class="bg-gray-200 text-black px-4 py-2 rounded-md flex flex-row">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<h1 class="text-2xl font-bold mb-4 mt-10">Add Bookmark to Collection 1</h1>
+<h1 class="text-2xl font-bold mb-4 mt-10">Add Bookmark to <?= $data['collectionName'] ?></h1>
 
 <form class="mt-4 flex flex-col" action="/bookmarks" method="post">
     <label class="text-gray-600 mb-2 mt-5 block" for="title">Title</label>

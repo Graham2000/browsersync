@@ -19,7 +19,7 @@ $router->get('/', [HomeController::class, 'index']);
 $router->get('/collections', [CollectionController::class, 'collections']);
 $router->get('/collections/add', [CollectionController::class, 'add']);
 $router->get('/collection/{id}', [CollectionController::class, 'collection']);
-$router->get('/bookmarks/add', [BookmarkController::class, 'add']);
+$router->get('/collections/{collection_id}/bookmarks/add', [BookmarkController::class, 'add']);
 
 $result = $router->dispatch($_SERVER['REQUEST_URI']);
 
