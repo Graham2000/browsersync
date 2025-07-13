@@ -66,4 +66,44 @@ class BookmarkModel
             throw $e;
         }
     }
+
+    public function getBookmarkById($bookmarkId)
+    {
+        $db = new Database();
+        $stmt = $db->query("SELECT bookmarks.id, bookmarks.collection_id, bookmarks.title, bookmarks.description, 
+        bookmarks.url, bookmarks.created_at, bookmarks.updated_at,
+        GROUP_CONCAT(tags.name) as tags
+        FROM bookmarks 
+        LEFT JOIN bookmark_tags ON bookmarks.id = bookmark_tags.bookmark_id 
+        LEFT JOIN tags ON bookmark_tags.tag_id = tags.id 
+        WHERE bookmarks.id = ?
+        GROUP BY bookmarks.id", [$bookmarkId]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function updateBookmark($bookmarkId, $collectionId, $title, $url, $description, $tags)
+    {
+        $db = new Database();
+
+        try {
+            $db->beginTransaction();
+
+            $db->query("UPDATE bookmarks SET title = ?, url = ?, description = ? WHERE id = ?", [$title, $url, $description, $bookmarkId]);
+            $db->query("DELETE FROM bookmark_tags WHERE bookmark_id = ?", [$bookmarkId]);
+            $tagsArray = explode(',', $tags);
+            foreach ($tagsArray as $tag) {
+                $tagId = $db->query("SELECT id FROM tags WHERE name = ?", [$tag])->fetchColumn();
+                if (!$tagId) {
+                    $db->query("INSERT INTO tags (name) VALUES (?)", [$tag]);   
+                    $tagId = $db->lastInsertId();
+                }
+                $db->query("INSERT INTO bookmark_tags (bookmark_id, tag_id) VALUES (?, ?)", [$bookmarkId, $tagId]);
+            }
+
+            $db->commit();
+        } catch (\Exception $e) {
+            $db->rollBack();
+            throw $e;
+        }
+    }
 }

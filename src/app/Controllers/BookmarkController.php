@@ -90,4 +90,52 @@ class BookmarkController
             exit;
         }
     }
+
+    public function edit($params)
+    {
+        $bookmarkId = $params['bookmark_id'] ?? null;
+        $collectionId = $params['collection_id'] ?? null;
+
+        $collectionModel = new CollectionModel();
+        $collectionName = $collectionModel->getCollectionNameById($collectionId);
+
+        $bookmarkModel = new BookmarkModel();
+        $bookmark = $bookmarkModel->getBookmarkById($bookmarkId);
+
+        $data = [
+            'title' => 'Edit Bookmark - BrowserSync',
+            'collectionId' => $collectionId,
+            'collectionName' => $collectionName,
+            'bookmarkId' => $bookmarkId,
+            'bookmark' => $bookmark
+        ];
+        
+        $view = __DIR__ . '/../Views/bookmarks/edit.php';
+        include __DIR__ . '/../Views/layouts/app.php';
+    }
+
+    public function update($params)
+    {
+        $bookmarkId = $params['bookmark_id'] ?? null;
+        $collectionId = $params['collection_id'] ?? null;
+        $title = $_POST['title'] ?? '';
+        $url = $_POST['url'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $tags = $_POST['tags'] ?? '';
+
+        if (empty($title) || empty($url)) {
+            header('Location: /collections/' . $collectionId . '/bookmarks/' . $bookmarkId . '/edit?error=Title and URL are required');
+            exit;
+        }
+
+        try {
+            $bookmarkModel = new BookmarkModel();
+            $bookmarkModel->updateBookmark($bookmarkId, $collectionId, $title, $url, $description, $tags);
+            header('Location: /collection/' . $collectionId);
+            exit;
+        } catch (\Exception $e) {
+            header('Location: /collections/' . $collectionId . '/bookmarks/' . $bookmarkId . '/edit?error=Failed to update bookmark');
+            exit;
+        }
+    }
 }
