@@ -7,7 +7,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const addBookmarkButton = document.querySelector('#addBookmarkButton');
 
-    addBookmarkButton.addEventListener('click', () => {
-        console.log('Add Bookmark button clicked');
-    });
+    if (addBookmarkButton) {
+        addBookmarkButton.addEventListener('click', () => {
+            console.log('Add Bookmark button clicked');
+        });
+    }
 });

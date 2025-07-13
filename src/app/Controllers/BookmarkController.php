@@ -15,7 +15,8 @@ class BookmarkController
 
         $data = [
             'title' => 'Bookmarks - BrowserSync',
-            'bookmarks' => $bookmarks
+            'bookmarks' => $bookmarks,
+            'scripts' => ['/assets/js/bookmarks.js']
         ];
         
         $view = __DIR__ . '/../Views/bookmarks/index.php';
@@ -34,7 +35,8 @@ class BookmarkController
             $data = [
                 'title' => 'Add Bookmark - BrowserSync',
                 'collectionId' => $collectionId,
-                'collectionName' => $collectionName
+                'collectionName' => $collectionName,
+                'scripts' => ['/assets/js/bookmarks.js']
             ];
             
             $view = __DIR__ . '/../Views/bookmarks/add.php';

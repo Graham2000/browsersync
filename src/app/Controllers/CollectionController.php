@@ -20,7 +20,8 @@ class CollectionController
 
         $data = [
             'title' => 'Collections - BrowserSync',
-            'collections' => $collections
+            'collections' => $collections,
+            'scripts' => ['/assets/js/collections.js']
         ];
         
         $view = __DIR__ . '/../Views/collections/index.php';
@@ -74,7 +75,8 @@ class CollectionController
             'title' => 'Collection ' . $id . ' - BrowserSync',
             'collectionName' => $collectionName,
             'id' => $id,
-            'bookmarks' => $bookmarks
+            'bookmarks' => $bookmarks,
+            'scripts' => ['/assets/js/bookmarks.js']
         ];
         
         $view = __DIR__ . '/../Views/collections/collection.php';

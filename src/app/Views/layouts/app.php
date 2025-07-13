@@ -17,7 +17,10 @@
     </div>
 </div>
 
-<script src="/assets/js/collections.js"></script>
-<script src="/assets/js/bookmarks.js"></script>
+<?php if (isset($data['scripts']) && is_array($data['scripts'])): ?>
+    <?php foreach ($data['scripts'] as $script): ?>
+        <script src="<?= $script ?>"></script>
+    <?php endforeach; ?>
+<?php endif; ?>
 </body>
 </html>  
