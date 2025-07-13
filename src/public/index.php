@@ -11,13 +11,11 @@ $dotenv->load();
 use App\Controllers\HomeController;
 use App\Controllers\BookmarkController;
 use App\Controllers\CollectionController;
-use App\Controllers\TestController;
 use Core\Router;
 
 $router = new Router();
 
 $router->get('/', [HomeController::class, 'index']);
-$router->get('/test', [TestController::class, 'index']);
 $router->get('/collections', [CollectionController::class, 'collections']);
 $router->get('/collections/add', [CollectionController::class, 'add']);
 $router->get('/collection/{id}', [CollectionController::class, 'collection']);

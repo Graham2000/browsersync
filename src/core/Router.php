@@ -21,12 +21,10 @@ class Router
         $path = parse_url($uri, PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         
-        // First try exact match
         if (isset($this->routes[$method][$path])) {
             return $this->executeCallback($this->routes[$method][$path]);
         }
         
-        // Then try pattern matching for dynamic routes
         foreach ($this->routes[$method] as $routePath => $callback) {
             if ($this->matchRoute($routePath, $path, $params)) {
                 return $this->executeCallback($callback, $params);
@@ -39,17 +37,14 @@ class Router
 
     private function matchRoute(string $routePath, string $requestPath, &$params): bool
     {
-        // Convert route pattern to regex
         $pattern = preg_replace('/\{([^}]+)\}/', '([^/]+)', $routePath);
         $pattern = '#^' . $pattern . '$#';
         
         if (preg_match($pattern, $requestPath, $matches)) {
             $params = [];
             
-            // Extract parameter names from route
             preg_match_all('/\{([^}]+)\}/', $routePath, $paramNames);
             
-            // Map parameter names to values
             for ($i = 1; $i < count($matches); $i++) {
                 $params[$paramNames[1][$i - 1]] = $matches[$i];
             }
@@ -68,7 +63,6 @@ class Router
             
             $controller = new $controllerClass();
             
-            // Pass parameters to the controller method
             if (!empty($params)) {
                 return $controller->$methodName($params);
             }
