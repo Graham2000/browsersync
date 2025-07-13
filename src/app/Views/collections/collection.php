@@ -30,7 +30,10 @@
             </div>
             <div class="flex flex-row gap-2 mt-6">
                 <button class="bg-gray-200 text-black px-4 py-2 rounded-md">Edit</button>
-                <button class="bg-gray-200 text-black px-4 py-2 rounded-md">Delete</button>
+
+                <form action="/collections/<?= $data['id'] ?>/bookmarks/<?= $bookmark['id'] ?>/delete" method="post" style="display: inline;">
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md" onclick="return confirm('Delete this bookmark?')">Delete</button>
+                </form>
             </div>
         </div>
         <?php endforeach; ?>

@@ -24,17 +24,68 @@ class BookmarkController
 
     public function add($params = [])
     {
-        $collectionModel = new CollectionModel();
-        $collectionId = $params['collection_id'] ?? null;
-        $collectionName = $collectionModel->getCollectionNameById($collectionId);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->processAddBookmark($params);
+        } else {
+            $collectionModel = new CollectionModel();
+            $collectionId = $params['collection_id'] ?? null;
+            $collectionName = $collectionModel->getCollectionNameById($collectionId);
 
-        $data = [
-            'title' => 'Add Bookmark - BrowserSync',
-            'collectionId' => $collectionId,
-            'collectionName' => $collectionName
-        ];
+            $data = [
+                'title' => 'Add Bookmark - BrowserSync',
+                'collectionId' => $collectionId,
+                'collectionName' => $collectionName
+            ];
+            
+            $view = __DIR__ . '/../Views/bookmarks/add.php';
+            include __DIR__ . '/../Views/layouts/app.php';
+        }
+    }
+
+    private function processAddBookmark($params)
+    {
+        $collectionId = $params['collection_id'] ?? null;
+        $title = $_POST['title'] ?? '';
+        $url = $_POST['url'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $tags = $_POST['tags'] ?? '';
+
+        if (empty($title) || empty($url)) {
+            // Validation failed - redirect back to form with error
+            header('Location: /collections/' . $collectionId . '/bookmarks/add?error=Title and URL are required');
+            exit;
+        }
+
+        try {
+            $bookmarkModel = new BookmarkModel();
+            $bookmarkModel->addBookmark($collectionId, $title, $url, $description, $tags);
+            header('Location: /collection/' . $collectionId);
+            exit;
+        } catch (\Exception $e) {
+            // Handle database error
+            header('Location: /collections/' . $collectionId . '/bookmarks/add?error=Failed to add bookmark');
+            exit;
+        }
+    }
+
+    public function delete($params)
+    {
+        $bookmarkId = $params['bookmark_id'] ?? null;
+        $collectionId = $params['collection_id'] ?? null;
         
-        $view = __DIR__ . '/../Views/bookmarks/add.php';
-        include __DIR__ . '/../Views/layouts/app.php';
+        if (!$bookmarkId || !$collectionId) {
+            header('Location: /collections');
+            exit;
+        }
+
+        try {
+            $bookmarkModel = new BookmarkModel();
+            $bookmarkModel->deleteBookmark($bookmarkId);
+            header('Location: /collection/' . $collectionId);
+            exit;
+        } catch (\Exception $e) {
+            header('Location: /collection/' . $collectionId . '?error=Failed to delete bookmark');
+            exit;
+        }
     }
 }

@@ -21,6 +21,10 @@ class Router
         $path = parse_url($uri, PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         
+        if ($method === 'POST' && isset($_POST['_method'])) {
+            $method = strtoupper($_POST['_method']);
+        }
+        
         if (isset($this->routes[$method][$path])) {
             return $this->executeCallback($this->routes[$method][$path]);
         }
