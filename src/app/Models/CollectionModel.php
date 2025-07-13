@@ -30,4 +30,28 @@ class CollectionModel
         $stmt = $db->query("INSERT INTO collections (title, created_at, updated_at) VALUES (?, NOW(), NOW())", [$title]);
         return $db->getConnection()->lastInsertId();
     }
+
+    public function deleteCollection($collectionId)
+    {
+        $db = new Database();
+        $pdo = $db->getConnection();
+        
+        try {
+            $pdo->beginTransaction();
+            
+            $db->query("DELETE bt FROM bookmark_tags bt 
+                       INNER JOIN bookmarks b ON bt.bookmark_id = b.id 
+                       WHERE b.collection_id = ?", [$collectionId]);
+            
+            $db->query("DELETE FROM bookmarks WHERE collection_id = ?", [$collectionId]);
+            
+            $db->query("DELETE FROM collections WHERE id = ?", [$collectionId]);
+            
+            $pdo->commit();
+            return true;
+        } catch (\Exception $e) {
+            $pdo->rollBack();
+            throw $e;
+        }
+    }
 }

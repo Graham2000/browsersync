@@ -80,4 +80,23 @@ class CollectionController
         $view = __DIR__ . '/../Views/collections/collection.php';
         include __DIR__ . '/../Views/layouts/app.php';
     }
+
+    public function delete($params)
+    {
+        $collectionId = $params['collection_id'] ?? null;
+
+        if (!$collectionId) {
+            header('Location: /collections');
+            exit;
+        }
+
+        try {
+            $this->collectionModel->deleteCollection($collectionId);
+            header('Location: /collections');
+            exit;
+        } catch (\Exception $e) {
+            header('Location: /collections?error=Failed to delete collection');
+            exit;
+        }
+    }
 }
