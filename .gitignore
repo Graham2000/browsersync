@@ -1,0 +1,86 @@
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+
+# Composer
+/src/vendor/
+vendor/
+composer.phar
+composer.lock
+composer.json
+composer.lock
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+package.json
+
+# Build outputs
+/public/dist/
+/public/assets/css/output.css
+/public/assets/js/*.min.js
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Database
+*.sqlite
+*.db
+mysql/
+
+# Docker
+.dockerignore
+docker-compose.yml
+Dockerfile
+start-dev.sh
+
+# Apache
+apache/
+.htaccess
+apache2.conf
+httpd.conf
+sites-available/
+sites-enabled/
+mods-available/
+mods-enabled/
+000-default.conf
+
+# Testing
+/coverage/
+.phpunit.result.cache
+
+# Backup files
+*.bak
+*.backup
+
+# Tailwind CSS
+/public/assets/css/tailwind.css 
+tailwind.config.js
+
