@@ -23,4 +23,11 @@ class CollectionModel
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['title'] : 'Unknown Collection';
     }
+
+    public function addCollection($title)
+    {
+        $db = new Database();
+        $stmt = $db->query("INSERT INTO collections (title, created_at, updated_at) VALUES (?, NOW(), NOW())", [$title]);
+        return $db->getConnection()->lastInsertId();
+    }
 }

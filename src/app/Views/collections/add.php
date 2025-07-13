@@ -11,6 +11,12 @@
 
 <h1 class="text-2xl font-bold mb-4 mt-10">Add Collection</h1>
 
+<?php if (isset($data['error'])): ?>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <?= htmlspecialchars($data['error']) ?>
+    </div>
+<?php endif; ?>
+
 <form class="mt-4 flex flex-col" action="/collections" method="post">
     <label class="text-gray-600 mb-2 mt-5 block" for="title">Title</label>
     <input type="text" name="title" placeholder="Enter Title" class="w-full p-4 border border-gray-300 rounded-md">

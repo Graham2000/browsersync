@@ -29,12 +29,37 @@ class CollectionController
 
     public function add()
     {
-        $data = [
-            'title' => 'Add Collection - BrowserSync'
-        ];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->processAddCollection();
+        } else {
+            $data = [
+                'title' => 'Add Collection - BrowserSync'
+            ];
+            
+            $view = __DIR__ . '/../Views/collections/add.php';
+            include __DIR__ . '/../Views/layouts/app.php';
+        }
+    }
+
+    private function processAddCollection()
+    {
+        $title = $_POST['title'] ?? '';
         
-        $view = __DIR__ . '/../Views/collections/add.php';
-        include __DIR__ . '/../Views/layouts/app.php';
+        if (empty($title)) {
+            $data = [
+                'title' => 'Add Collection - BrowserSync',
+                'error' => 'Collection title is required'
+            ];
+            
+            $view = __DIR__ . '/../Views/collections/add.php';
+            include __DIR__ . '/../Views/layouts/app.php';
+            return;
+        }
+
+        $this->collectionModel->addCollection($title);
+        
+        header('Location: /collections');
+        exit;
     }
 
     public function collection($params = [])

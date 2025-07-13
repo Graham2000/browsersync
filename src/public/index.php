@@ -21,6 +21,8 @@ $router->get('/collections/add', [CollectionController::class, 'add']);
 $router->get('/collection/{id}', [CollectionController::class, 'collection']);
 $router->get('/collections/{collection_id}/bookmarks/add', [BookmarkController::class, 'add']);
 
+$router->post('/collections', [CollectionController::class, 'add']);
+
 $result = $router->dispatch($_SERVER['REQUEST_URI']);
 
 ?> 
