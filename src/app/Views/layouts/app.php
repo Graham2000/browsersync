@@ -7,7 +7,7 @@
     <link href="/dist/output.css" rel="stylesheet">
 </head>
 <body>
-<div class="max-w-6xl mx-auto px-4 py-8 h-screen">
+<div class="max-w-6xl mx-auto h-screen">
     <div class="grid grid-cols-3 gap-4 h-full">
         <?php include __DIR__ . '/../partials/sidebar.php'; ?>
         
